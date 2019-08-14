@@ -41,7 +41,7 @@ sudo rm -rf /var/lib/docker // 清除程序docker运行时文件
 
 ## docker 入门
 ### login 登录
-> 登录到docker hub，类似github 只不过里边放的镜像
+*登录到docker hub，类似github 只不过里边放的镜像*
 
 ```
 docker login
@@ -91,7 +91,7 @@ docker rm 0ea20ae979a8
 docker rm $(docker ps -qa) 
 ```
 ## Dockerfile
-> 目标：使用容器编译并运行一个go程序
+*目标：使用容器编译并运行一个go程序*
 
 ### 简单的go程序
 #### 在主机新建main.go内容如下
@@ -135,7 +135,7 @@ CMD ["./godocker"]
 ```shell
 docker build . -t gotest
 ```
-> . Dockerfile所在的目录 -t 给镜像命名
+*.Dockerfile所在的目录 -t 给镜像命名*
 
 #### 运行镜像
 ```shell
@@ -150,7 +150,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 ## docker-compose.yaml
-> 目标：使用go程序并且使用一下mariadb
+*目标：使用go程序并且使用一下mariadb*
 
 1. 在目录下新建docker-compose.yaml内容如下
 ```yaml

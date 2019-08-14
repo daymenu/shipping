@@ -57,6 +57,7 @@ docker images nginx
 ```
 - -a 查看所有镜像
 - -q仅显示数字IDs
+
 ### rmi 删除镜像
 ```shell
 docker rmi nginx
@@ -69,6 +70,7 @@ docker run -d -p 8080:80 --rm nginx
 - -d 容器在后台运行
 - -p 端口映射 8080映射到容器的80端口
 --rm 容器停止后立即删除该容器
+
 ### ps 查看容器
 ```shell
 docker ps // 查看正在运行的容器
@@ -84,6 +86,7 @@ docker stop 0ea20ae979a8
 ```
 ### rm删除容器
 ```shell
+
 // 删除制定容器ID的容器
 docker rm 0ea20ae979a8
 

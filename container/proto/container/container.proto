@@ -1,0 +1,46 @@
+
+syntax="proto3";
+
+package daymenu.shipping.srv.container;
+
+// 集装箱服务
+service ContainerService {
+    rpc Create(Container) returns (Response){} // 创建集装箱
+    rpc Update(Container) returns (Response){} // 修改集装箱
+    rpc Get(Request) returns (Response){} // 获取集装箱
+    rpc Use(Request) returns (Response){} // 使用集装箱
+    rpc Page(Request) returns (Response){} // 集装箱列表
+    rpc GiveBack(Request) returns (Response){} // 归还集装箱
+}
+
+message Container {
+    int64 id = 1; // 编号
+    string customer_id =  2; //集装箱所属客户编号
+    string origin = 3; // 出发地
+    string user_id = 4; //集装箱所属用户编号
+    int64 height = 5; // 集装箱高度
+    int64 width = 6; //集装箱宽度
+    int64 long = 7; // 集装箱长度
+    int32 status = 8; //1 可用 2 正在使用 3 已经报废
+}
+
+message Containers {
+    repeated Container containers =1;
+}
+
+message Request {
+    int64 height = 1; // 货物箱高度
+    int64 width = 2; // 货物箱宽度
+    int64 long = 3; // 货物箱长度
+    int64 page = 4; // 几页
+    int64 pageSize = 5; //每页几条
+    int64 id = 6;//id
+    string name = 7; // 集装箱名字
+    repeated Container containers = 8;
+}
+
+message Response {
+    int32 code = 1; // 200 成功
+    repeated Container containers = 2;// 获取到的集装箱
+    Container container = 3;
+}

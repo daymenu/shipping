@@ -1,0 +1,6 @@
+{
+    "mysql": {
+        "host": "localhost",
+        "name": "shipping"
+    }
+}

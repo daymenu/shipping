@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package daymenu.shippping.api.container;
+
+import "github.com/micro/go-micro/api/proto/api.proto";
+
+service ContainerService {
+	rpc Get(go.api.Request) returns(go.api.Response) {};
+}

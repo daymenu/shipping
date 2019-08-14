@@ -86,12 +86,11 @@ docker stop 0ea20ae979a8
 ```
 ### rm删除容器
 ```shell
-
-// 删除制定容器ID的容器
 docker rm 0ea20ae979a8
+// 删除制定容器ID的容器
 
+docker rm $(docker ps -qa)
 //删除所有已停止的容器
-docker rm $(docker ps -qa) 
 ```
 ## Dockerfile
 *目标：使用容器编译并运行一个go程序*

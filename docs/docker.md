@@ -1,5 +1,5 @@
 # docker
- ## 安装docker
+## 安装docker
  1. 下载公用软件
  ```shell
  sudo apt-get install \

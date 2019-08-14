@@ -154,7 +154,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 ## docker-compose.yaml
 *目标：使用go程序并且使用一下mariadb*
 
-1. 在目录下新建docker-compose.yaml内容如下
+### 在目录下新建docker-compose.yaml内容如下
+
 ```yaml
 # 指定版本
 version: '3'
@@ -178,7 +179,8 @@ services:
   environment:
    MYSQL_HOST: mariadb.host
 ```
-2. 在当前目录下新建 main.go，内容如下
+### 在当前目录下新建 main.go，内容如下
+
 ```go
 // 连接mariadb 并且输出mysql数据库中的所有表
 package main
@@ -218,7 +220,8 @@ func main() {
 	}
 }
 ```
-3. 在当前目录下新建Dockfile文件内容如下
+### 在当前目录下新建Dockfile文件内容如下
+
 ```shell
 # 设置要拉取的镜像
 FROM golang:latest AS godb
@@ -239,7 +242,7 @@ RUN go build -o godb main.go
 CMD ["./godb"]
 
 ```
-4. 运行
+### 运行
 ```shell
 // 编译
 docker-compose build

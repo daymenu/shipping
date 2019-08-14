@@ -1,6 +1,7 @@
 # docker
 ## 安装docker
  1. 下载公用软件
+
  ```shell
  sudo apt-get install \
     apt-transport-https \
@@ -9,7 +10,9 @@
     gnupg-agent \
     software-properties-common
  ```
+
 2. 添加docker源
+
 ```shell
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo apt-key fingerprint 0EBFCD88
@@ -19,19 +22,23 @@ sudo add-apt-repository \
    $(lsb_release -cs) \
    stable"
 ```
+
 3.  查看版本
 ```shell
 apt-cache madison docker-ce
 ```
+
 4.  安装
 ```shell
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
+
 5. 卸载
 ```shell
 sudo apt-get purge docker-ce // 卸载
 sudo rm -rf /var/lib/docker // 清除程序docker运行时文件
 ```
+
 ## docker 入门
 ### login 登录
 > 登录到docker hub，类似github 只不过里边放的镜像

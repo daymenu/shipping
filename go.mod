@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/daymenu/user-service v0.0.0-20190801101708-db5ba451905e
+	github.com/gin-gonic/gin v1.4.0
 	github.com/golang/protobuf v1.3.2
 	github.com/jinzhu/gorm v1.9.10
 	github.com/micro/go-micro v1.8.1

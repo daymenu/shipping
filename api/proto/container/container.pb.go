@@ -30,17 +30,20 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("proto/container/container.proto", fileDescriptor_3ec6c08f9f0309d9) }
 
 var fileDescriptor_3ec6c08f9f0309d9 = []byte{
-	// 156 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x44, 0x8c, 0xbd, 0xaa, 0x02, 0x31,
-	0x10, 0x46, 0x2f, 0x5c, 0xb0, 0x48, 0xe3, 0x92, 0x72, 0x9b, 0x05, 0x4b, 0x61, 0x27, 0xa0, 0xbd,
-	0x8d, 0x85, 0xbd, 0x3e, 0x41, 0x36, 0x0e, 0xd9, 0x29, 0x92, 0x19, 0xf3, 0x23, 0xf8, 0xf6, 0x62,
-	0x16, 0xdd, 0xee, 0x30, 0xf3, 0x9d, 0xa3, 0x06, 0x49, 0x5c, 0xd8, 0x38, 0x8e, 0xc5, 0x52, 0xc4,
-	0xb4, 0x12, 0xb4, 0x8f, 0x1e, 0xee, 0xf6, 0x15, 0x30, 0x56, 0xc8, 0x33, 0x89, 0x08, 0x45, 0x0f,
-	0x56, 0x08, 0x7e, 0xb3, 0x7e, 0xf4, 0x54, 0xe6, 0x3a, 0x81, 0xe3, 0x60, 0x02, 0xb9, 0xc4, 0xc6,
-	0xf3, 0xb8, 0x80, 0x15, 0x32, 0x4b, 0xff, 0xa3, 0x34, 0x3a, 0x9c, 0x54, 0x77, 0xfe, 0xba, 0x37,
-	0x4c, 0x4f, 0x72, 0xa8, 0xf7, 0xea, 0xff, 0x82, 0x45, 0x6f, 0xc1, 0x73, 0x8b, 0x5f, 0xf1, 0x51,
-	0x31, 0x97, 0xbe, 0x5b, 0x0f, 0x59, 0x38, 0x66, 0xdc, 0xfd, 0x4d, 0x9b, 0x96, 0x39, 0xbe, 0x03,
-	0x00, 0x00, 0xff, 0xff, 0x5e, 0x45, 0xb7, 0x4d, 0xb9, 0x00, 0x00, 0x00,
+	// 197 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x90, 0xb1, 0x4a, 0xc7, 0x30,
+	0x10, 0x87, 0x45, 0xa5, 0x48, 0x16, 0x4b, 0xc6, 0x2e, 0x05, 0x47, 0xa5, 0x09, 0xe8, 0x1b, 0xd8,
+	0xa1, 0xab, 0x28, 0x7d, 0x80, 0x34, 0x3d, 0xd2, 0x43, 0x9a, 0x3b, 0x93, 0xb4, 0xe0, 0x0b, 0xf9,
+	0x9c, 0x62, 0x8a, 0xff, 0xae, 0xd9, 0x7e, 0x24, 0xdf, 0xf7, 0x0d, 0x27, 0x5a, 0x0e, 0x94, 0x48,
+	0x5b, 0xf2, 0xc9, 0xa0, 0x87, 0x70, 0x2e, 0x95, 0x7f, 0x64, 0x3b, 0x9b, 0xef, 0x15, 0xfc, 0xa6,
+	0xe2, 0x82, 0xcc, 0x8c, 0xde, 0x29, 0xc3, 0xa8, 0x2e, 0x58, 0xd3, 0x39, 0x4c, 0xcb, 0x36, 0x29,
+	0x4b, 0xab, 0x5e, 0xd1, 0x06, 0xd2, 0x8e, 0xba, 0x63, 0x18, 0x46, 0x7d, 0xf4, 0xff, 0x94, 0xbc,
+	0x9e, 0x7f, 0xae, 0x45, 0xdd, 0xff, 0xcb, 0x1f, 0x10, 0x76, 0xb4, 0x20, 0x9f, 0xc4, 0xed, 0x9b,
+	0x71, 0x20, 0xef, 0x95, 0xa3, 0x9c, 0x7f, 0x87, 0xaf, 0x0d, 0x62, 0x6a, 0xea, 0xf3, 0x21, 0x32,
+	0xf9, 0x08, 0x0f, 0x57, 0xf2, 0x51, 0xdc, 0x0c, 0x90, 0x8a, 0xd9, 0x31, 0x16, 0x76, 0xb5, 0xb8,
+	0x1b, 0x70, 0x87, 0x57, 0x63, 0x3f, 0xcb, 0x84, 0x4e, 0x54, 0x7d, 0x00, 0x93, 0xa0, 0x18, 0x1f,
+	0x79, 0x2e, 0xc5, 0xa7, 0x2a, 0xdf, 0xeb, 0xe5, 0x37, 0x00, 0x00, 0xff, 0xff, 0x6a, 0x96, 0xe7,
+	0x6b, 0xa2, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -51,7 +54,12 @@ var _ server.Option
 // Client API for ContainerService service
 
 type ContainerServiceClient interface {
+	Page(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
 	Get(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
+	Use(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
+	GiveBack(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
+	Create(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
+	Update(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error)
 }
 
 type containerServiceClient struct {
@@ -72,8 +80,58 @@ func NewContainerServiceClient(serviceName string, c client.Client) ContainerSer
 	}
 }
 
+func (c *containerServiceClient) Page(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
+	req := c.c.NewRequest(c.serviceName, "ContainerService.Page", in)
+	out := new(proto1.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *containerServiceClient) Get(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
 	req := c.c.NewRequest(c.serviceName, "ContainerService.Get", in)
+	out := new(proto1.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *containerServiceClient) Use(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
+	req := c.c.NewRequest(c.serviceName, "ContainerService.Use", in)
+	out := new(proto1.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *containerServiceClient) GiveBack(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
+	req := c.c.NewRequest(c.serviceName, "ContainerService.GiveBack", in)
+	out := new(proto1.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *containerServiceClient) Create(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
+	req := c.c.NewRequest(c.serviceName, "ContainerService.Create", in)
+	out := new(proto1.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *containerServiceClient) Update(ctx context.Context, in *proto1.Request, opts ...client.CallOption) (*proto1.Response, error) {
+	req := c.c.NewRequest(c.serviceName, "ContainerService.Update", in)
 	out := new(proto1.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -85,7 +143,12 @@ func (c *containerServiceClient) Get(ctx context.Context, in *proto1.Request, op
 // Server API for ContainerService service
 
 type ContainerServiceHandler interface {
+	Page(context.Context, *proto1.Request, *proto1.Response) error
 	Get(context.Context, *proto1.Request, *proto1.Response) error
+	Use(context.Context, *proto1.Request, *proto1.Response) error
+	GiveBack(context.Context, *proto1.Request, *proto1.Response) error
+	Create(context.Context, *proto1.Request, *proto1.Response) error
+	Update(context.Context, *proto1.Request, *proto1.Response) error
 }
 
 func RegisterContainerServiceHandler(s server.Server, hdlr ContainerServiceHandler, opts ...server.HandlerOption) {
@@ -96,6 +159,26 @@ type ContainerService struct {
 	ContainerServiceHandler
 }
 
+func (h *ContainerService) Page(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
+	return h.ContainerServiceHandler.Page(ctx, in, out)
+}
+
 func (h *ContainerService) Get(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
 	return h.ContainerServiceHandler.Get(ctx, in, out)
+}
+
+func (h *ContainerService) Use(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
+	return h.ContainerServiceHandler.Use(ctx, in, out)
+}
+
+func (h *ContainerService) GiveBack(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
+	return h.ContainerServiceHandler.GiveBack(ctx, in, out)
+}
+
+func (h *ContainerService) Create(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
+	return h.ContainerServiceHandler.Create(ctx, in, out)
+}
+
+func (h *ContainerService) Update(ctx context.Context, in *proto1.Request, out *proto1.Response) error {
+	return h.ContainerServiceHandler.Update(ctx, in, out)
 }

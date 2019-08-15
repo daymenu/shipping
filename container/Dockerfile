@@ -13,5 +13,5 @@ RUN mkdir /app
 WORKDIR /app  
 ADD container /app/container
 
-# 开启vessel微服务
-CMD ["./container", "--registry_address=registry:8500"]
+# 开启container微服务
+CMD ["./container",  "--registry_address=registry:8500"]

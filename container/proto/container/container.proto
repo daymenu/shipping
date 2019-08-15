@@ -13,6 +13,7 @@ service ContainerService {
     rpc GiveBack(Request) returns (Response){} // 归还集装箱
 }
 
+// 集装箱
 message Container {
     int64 id = 1; // 编号
     string customer_id =  2; //集装箱所属客户编号
@@ -24,10 +25,7 @@ message Container {
     int32 status = 8; //1 可用 2 正在使用 3 已经报废
 }
 
-message Containers {
-    repeated Container containers =1;
-}
-
+// 请求
 message Request {
     int64 height = 1; // 货物箱高度
     int64 width = 2; // 货物箱宽度
@@ -39,8 +37,9 @@ message Request {
     repeated Container containers = 8;
 }
 
+//响应
 message Response {
     int32 code = 1; // 200 成功
     repeated Container containers = 2;// 获取到的集装箱
-    Container container = 3;
+    Container container = 3;//获取到的一个集装箱
 }

@@ -1,32 +1,40 @@
 package main
 
 import (
-	"context"
 	"log"
+	"os"
 
+	"github.com/daymenu/shipping/api/app"
+	api "github.com/daymenu/shipping/api/proto/container"
+	pb "github.com/daymenu/shipping/container/proto/container"
 	"github.com/micro/go-micro"
-
-	pb "github.com/daymenu/shipping/api/proto/container"
-	api "github.com/micro/go-micro/api/proto"
+	"github.com/micro/go-micro/registry"
+	"github.com/micro/go-micro/registry/consul"
 )
 
-// Container 结构体
-type Container struct{}
-
-// Get 实现方法
-func (c *Container) Get(ctx context.Context, req *api.Request, rep *api.Response) error {
-	log.Print("received container get request")
-	log.Print(req.Get)
-	return nil
-}
 func main() {
-	srv := micro.NewService(
+	// 注册为consul
+	reg := consul.NewRegistry(func(op *registry.Options) {
+		op.Addrs = []string{
+			os.Getenv("CONSUL_HTTP_ADDR"),
+		}
+	})
+
+	// 建立consul类型的服务
+	srv := micro.NewService(micro.Registry(reg))
+
+	c := app.Container{}
+
+	// 建立container 服务的客户端
+	c.Service = pb.NewContainerServiceClient("daymenu.shipping.srv.container", srv.Client())
+	// 定义服务
+	apiSrv := micro.NewService(
 		micro.Name("daymenu.shippping.api.container"),
 		micro.Version("latest"),
 	)
-	srv.Init()
-	c := Container{}
-	pb.RegisterContainerServiceHandler(srv.Server(), &c)
+	// 初始化服务
+	apiSrv.Init()
+	api.RegisterContainerServiceHandler(apiSrv.Server(), &c)
 	if err := srv.Run(); err != nil {
 		log.Fatal(err)
 	}

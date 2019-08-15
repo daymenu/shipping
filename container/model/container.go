@@ -7,13 +7,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Container 定义Container接口
-type Container interface {
-	Get(*pb.Request) (*pb.Containers, error)
-	Create(*pb.Container) error
-	GiveBack(*pb.Containers) error
-}
-
 // ContainerModel 结构体
 type ContainerModel struct {
 	DB *gorm.DB
@@ -53,39 +46,35 @@ func (cm *ContainerModel) Use(r *pb.Request) ([]*pb.Container, error) {
 // Page 分页获取数据
 func (cm *ContainerModel) Page(r *pb.Request) ([]*pb.Container, error) {
 	var cs []*pb.Container
-	rows, err := cm.DB.Where("name like ?", r.GetId()).Where("").Limit(r.Page).Rows()
-	if err != nil {
-		return cs, err
+
+	if r.GetName() != "" {
+		cm.DB = cm.DB.Where("name like ?", r.GetName())
 	}
-	for rows.Next() {
-		var c pb.Container
-		rows.Scan(&c)
-		cs = append(cs, &c)
-	}
+	cm.DB.Limit(r.GetPageSize()).Offset(((r.GetPage() - 1) * r.GetPageSize())).Find(&cs)
 	return cs, nil
 }
 
 // Create 创建一个集装箱
-func (cm *ContainerModel) Create(c *pb.Container) error {
+func (cm *ContainerModel) Create(c *pb.Container) (*pb.Container, error) {
 	if err := cm.DB.Create(c).Error; err != nil {
-		return err
+		return c, err
 	}
-	return nil
+	return c, nil
 }
 
 // Update 创建一个集装箱
-func (cm *ContainerModel) Update(c *pb.Container) error {
-	if err := cm.DB.Create(c).Error; err != nil {
-		return err
+func (cm *ContainerModel) Update(c *pb.Container) (*pb.Container, error) {
+	if err := cm.DB.Update(c).Error; err != nil {
+		return c, err
 	}
-	return nil
+	return c, nil
 }
 
 // Get 获取集装箱
 func (cm *ContainerModel) Get(c *pb.Request) (*pb.Container, error) {
 	var container pb.Container
-	if err := cm.DB.Where("id=?", c.Id).First(&container).Error; err != nil {
-		return nil, err
+	if err := cm.DB.Where("id=?", c.GetId()).First(&container).Error; err != nil {
+		return nil, fmt.Errorf("%s%s%d%s%d", err, ":", c.GetId(), c.GetName(), c.GetWidth())
 	}
 	return &container, nil
 }

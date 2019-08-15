@@ -65,8 +65,8 @@ protoc -I. --proto_path=${GOPATH}/src  --go_out=plugins=micro:. ./hello.proto
 ```
 
 ### 数据类型
-|.proto Type| 	NOtes| 	go| 	php|
-|:---:|:---:|:---:|:---:|:---:|
+|.proto Type|Notes| go |php|
+|:---:|:---:|:---:|:---:|
 |double ||		float64| 	float|
 |float 	 ||			float32 |	float|
 |int32| 	如果有负号请使用sint32| 	int32 |	integer|

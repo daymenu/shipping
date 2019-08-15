@@ -1,6 +1,5 @@
 version: '3'
 services:
-# consul 注册中心
  consul:
   image: consul:latest
   hostname: registry
@@ -12,7 +11,6 @@ services:
   - "8600:53/udp"
   environment:
    GOMAXPROCS: 2
-  # micro api 网关
  micro:
   command: api --handler=api
   image: microhq/micro:latest

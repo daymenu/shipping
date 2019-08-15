@@ -1,6 +1,6 @@
 # 集装箱微服务
 
-- 安装依赖库
+- 安装依赖库  
 
 ```shell
 GOPROXY=https://goproxy.io go get -u github.com/micro/go-micro
@@ -9,9 +9,10 @@ GOPROXY=https://goproxy.io go get -u  github.com/jinzhu/gorm
 ```
 - 目录规划
 shipping 是项目文件
-shipping>container为container微服务的文件夹
-以下代码以container目录为基础
+shipping>container为container微服务的文件夹  
+以下代码以container目录为基础  
 - 编写container.proto
+
 ```protobuf
 
 syntax="proto3";
@@ -58,10 +59,12 @@ message Response {
 }
 ```
 - 使用protoc生成对应的go代码
+
 ```shell
 protoc -I. --go_out=plugins=micro:.  ./proto/container/container.proto
 ```
 - 查看生成的go代码，并关注其中的服务接口
+
 ```go
 // Server API for ContainerService service
 
@@ -77,6 +80,7 @@ type ContainerServiceHandler interface {
 - 编写model
 1. 新建model文件夹
 2. 新建database.go文件，内容如下
+
 ```go
 package model
 
@@ -109,6 +113,7 @@ func CreateConn() (*gorm.DB, error) {
 }
 ```
 3. 新建container.go
+
 ```go
 package model
 
@@ -217,6 +222,7 @@ func (cm *ContainerModel) GiveBack(cs []*pb.Container) error {
 - 编写 handler
 1. 新建handler文件夹
 2. 新建container.go文件
+
 ```go
 package handler
 
@@ -306,6 +312,7 @@ func (c *Container) GiveBack(ctx context.Context, req *pb.Request, rep *pb.Respo
 
 ```
 - 新建 main.go
+
 ```go
 package main
 
@@ -425,11 +432,13 @@ services:
 ```
 
 - 编译docker
+
 ```shell
 docker-compose build
 ```
 
 - 运行
+
 ```shell
  docker-compose up -d
 ```

@@ -16,7 +16,7 @@ type IContainer interface {
 	Get(context.Context, *pb.Request, *pb.Response) error
 	Use(context.Context, *pb.Request, *pb.Response) error
 	Page(context.Context, *pb.Request, *pb.Response) error
-	GiveBack(context.Context, *pb.Containers, *pb.Response) error
+	GiveBack(context.Context, *pb.Request, *pb.Response) error
 }
 
 // Container 结构体
@@ -73,12 +73,13 @@ func (c *Container) Use(ctx context.Context, req *pb.Request, resp *pb.Response)
 // Page 获取集装箱
 func (c *Container) Page(ctx context.Context, req *pb.Request, resp *pb.Response) error {
 	cm := model.ContainerModel{DB: c.DB}
-	containers, err := cm.Page(req)
+	containers, count, err := cm.Page(req)
 	if err != nil {
 		return err
 	}
 	resp.Code = 200
 	resp.Containers = containers
+	resp.Count = count
 	return nil
 }
 

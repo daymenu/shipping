@@ -14,6 +14,13 @@ docker-compose build
 docker-compose up -d
 ```
 
+## 建立数据库
+```shell
+docker exec  -it 容器id
+mysql -u root -p123456
+create database shipping
+```
+
 ## 通过micro web 查看服务
 
 ```
@@ -29,4 +36,6 @@ windows 访问 192.168.99.100：8082
 这是因为没有传入id的参数
 ```
 
+###  程序的二进制文件也已提交，可以直接看展示效果
+###  如果自己写程序编译的话有可能会碰到这样或这那样的问题，请查看错误信息，然后搜索解决
 ### 完成

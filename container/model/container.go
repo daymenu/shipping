@@ -44,14 +44,15 @@ func (cm *ContainerModel) Use(r *pb.Request) ([]*pb.Container, error) {
 }
 
 // Page 分页获取数据
-func (cm *ContainerModel) Page(r *pb.Request) ([]*pb.Container, error) {
+func (cm *ContainerModel) Page(r *pb.Request) ([]*pb.Container, int64, error) {
 	var cs []*pb.Container
-
+	var count int64
 	if r.GetName() != "" {
 		cm.DB = cm.DB.Where("name like ?", r.GetName())
 	}
+
 	cm.DB.Limit(r.GetPageSize()).Offset(((r.GetPage() - 1) * r.GetPageSize())).Find(&cs)
-	return cs, nil
+	return cs, count, nil
 }
 
 // Create 创建一个集装箱
@@ -64,7 +65,7 @@ func (cm *ContainerModel) Create(c *pb.Container) (*pb.Container, error) {
 
 // Update 创建一个集装箱
 func (cm *ContainerModel) Update(c *pb.Container) (*pb.Container, error) {
-	if err := cm.DB.Update(c).Error; err != nil {
+	if err := cm.DB.Save(c).Error; err != nil {
 		return c, err
 	}
 	return c, nil

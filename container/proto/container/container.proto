@@ -16,7 +16,7 @@ service ContainerService {
 // 集装箱
 message Container {
     int64 id = 1; // 编号
-    string customer_id =  2; //集装箱所属客户编号
+    string customer_id =  2 ; //集装箱所属客户编号
     string origin = 3; // 出发地
     string user_id = 4; //集装箱所属用户编号
     int64 height = 5; // 集装箱高度
@@ -42,4 +42,5 @@ message Response {
     int32 code = 1; // 200 成功
     repeated Container containers = 2;// 获取到的集装箱
     Container container = 3;//获取到的一个集装箱
+    int64 count = 9; //总数
 }

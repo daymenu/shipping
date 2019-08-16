@@ -2,8 +2,7 @@ package app
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
+	"log"
 
 	pb "github.com/daymenu/shipping/container/proto/container"
 	microapi "github.com/micro/go-micro/api/proto"
@@ -37,9 +36,11 @@ func (container *Container) Get(ctx context.Context, req *microapi.Request, resp
 		return nil
 	}
 
-	ct, err := json.Marshal(response.GetContainer())
-
-	resp.Body = string(ct)
+	resp.Body = APISuccess(struct {
+		Container *pb.Container `json:"container"`
+	}{
+		Container: response.GetContainer(),
+	})
 
 	return nil
 }
@@ -60,8 +61,13 @@ func (container *Container) Page(ctx context.Context, req *microapi.Request, res
 		PageSize: pageSize,
 	})
 
-	j, _ := json.Marshal(response)
-	resp.Body = string(j)
+	resp.Body = APISuccess(struct {
+		Count      int64           `json:"count"`
+		Containers []*pb.Container `json:"containers"`
+	}{
+		Count:      response.GetCount(),
+		Containers: response.GetContainers(),
+	})
 	return nil
 }
 
@@ -73,47 +79,47 @@ func (container *Container) Create(ctx context.Context, req *microapi.Request, r
 		resp.Body = APIError(11000, "请以POST方式提交数据")
 		return nil
 	}
-	fmt.Println(req.Method)
-	apiReq := APIRequest{request: req}
 
-	width, err := apiReq.GetInt64("width")
-	if err != nil && width < 0 {
+	apiReq := APIRequest{request: req}
+	log.Println(req.Post)
+	width, err := apiReq.PostInt64("width")
+	if err != nil && width <= 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
 		return nil
 	}
-	height, err := apiReq.GetInt64("height")
-	if err != nil && height < 0 {
+	height, err := apiReq.PostInt64("height")
+	if err != nil && height <= 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
 		return nil
 	}
-	customerID, err := apiReq.GetString("customerId")
+	customerID, err := apiReq.PostString("customer_id")
 	if err != nil && customerID == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写正确的客户id")
 		return nil
 	}
-	origin, err := apiReq.GetString("origin")
+	origin, err := apiReq.PostString("origin")
 	if err != nil && origin == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写来源")
 		return nil
 	}
-	userID, err := apiReq.GetString("userId")
+	userID, err := apiReq.PostString("user_id")
 	if err != nil && userID == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写正确的用户id")
 		return nil
 	}
-	long, err := apiReq.GetInt64("long")
-	if err != nil && long < 0 {
+	long, err := apiReq.PostInt64("long")
+	if err != nil && long <= 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱长度")
 		return nil
 	}
-	status, err := apiReq.GetInt32("status")
-	if err != nil && status < 0 {
+	status, err := apiReq.PostInt32("status")
+	if err != nil && status <= 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请选择集装箱状态")
 		return nil
@@ -133,8 +139,11 @@ func (container *Container) Create(ctx context.Context, req *microapi.Request, r
 		return nil
 	}
 
-	j, _ := json.Marshal(response.GetContainer())
-	resp.Body = string(j)
+	resp.Body = APISuccess(struct {
+		Container *pb.Container `json:"container"`
+	}{
+		Container: response.GetContainer(),
+	})
 	return nil
 }
 
@@ -148,49 +157,49 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 	}
 	apiReq := APIRequest{request: req}
 
-	id, err := apiReq.GetInt64("id")
+	id, err := apiReq.PostInt64("id")
 	if err != nil && id < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写要修改的集装箱ID")
 		return nil
 	}
-	long, err := apiReq.GetInt64("long")
+	long, err := apiReq.PostInt64("long")
 	if err != nil && long < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱长度")
 		return nil
 	}
-	width, err := apiReq.GetInt64("width")
+	width, err := apiReq.PostInt64("width")
 	if err != nil && width < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
 		return nil
 	}
-	height, err := apiReq.GetInt64("height")
+	height, err := apiReq.PostInt64("height")
 	if err != nil && height < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
 		return nil
 	}
-	customerID, err := apiReq.GetString("customerId")
+	customerID, err := apiReq.PostString("customer_id")
 	if err != nil && customerID == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写正确的客户id")
 		return nil
 	}
-	origin, err := apiReq.GetString("origin")
+	origin, err := apiReq.PostString("origin")
 	if err != nil && origin == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写来源")
 		return nil
 	}
-	userID, err := apiReq.GetString("userId")
+	userID, err := apiReq.PostString("user_id")
 	if err != nil && userID == "" {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写正确的用户id")
 		return nil
 	}
-	status, err := apiReq.GetInt32("status")
+	status, err := apiReq.PostInt32("status")
 	if err != nil && status < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请选择集装箱状态")
@@ -212,8 +221,11 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 		return nil
 	}
 
-	j, _ := json.Marshal(response.GetContainer())
-	resp.Body = string(j)
+	resp.Body = APISuccess(struct {
+		Container *pb.Container `json:"container"`
+	}{
+		Container: response.GetContainer(),
+	})
 	return nil
 }
 
@@ -221,19 +233,19 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 func (container *Container) Use(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 
-	long, err := apiReq.GetInt64("long")
+	long, err := apiReq.PostInt64("long")
 	if err != nil && long < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱长度")
 		return nil
 	}
-	width, err := apiReq.GetInt64("width")
+	width, err := apiReq.PostInt64("width")
 	if err != nil && width < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
 		return nil
 	}
-	height, err := apiReq.GetInt64("height")
+	height, err := apiReq.PostInt64("height")
 	if err != nil && height < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
@@ -245,8 +257,11 @@ func (container *Container) Use(ctx context.Context, req *microapi.Request, resp
 		Long:   long,
 	})
 
-	j, _ := json.Marshal(response)
-	resp.Body = string(j)
+	resp.Body = APISuccess(struct {
+		Containers []*pb.Container `json:"containers"`
+	}{
+		Containers: response.GetContainers(),
+	})
 	return nil
 }
 
@@ -260,7 +275,7 @@ func (container *Container) GiveBack(ctx context.Context, req *microapi.Request,
 	}
 	apiReq := APIRequest{request: req}
 
-	id, err := apiReq.GetInt64("id")
+	id, err := apiReq.PostInt64("id")
 	if err != nil && id < 0 {
 		resp.StatusCode = 500
 		resp.Body = APIError(10000, "请填写要归还的集装箱ID")
@@ -277,7 +292,10 @@ func (container *Container) GiveBack(ctx context.Context, req *microapi.Request,
 		return nil
 	}
 
-	j, _ := json.Marshal(response.GetContainer())
-	resp.Body = string(j)
+	resp.Body = APISuccess(struct {
+		Container *pb.Container `json:"container"`
+	}{
+		Container: response.GetContainer(),
+	})
 	return nil
 }

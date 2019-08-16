@@ -65,21 +65,21 @@ protoc -I. --proto_path=${GOPATH}/src  --go_out=plugins=micro:. ./hello.proto
 ```
 
 ### 数据类型
-|.proto Type| 	NOtes| 	go| 	php|
-|:---:|:---:|:---:|:---:|:---:|
-|double ||		float64| 	float|
-|float 	 ||			float32 |	float|
-|int32| 	如果有负号请使用sint32| 	int32 |	integer|
-|int64| 	如果有负号请使用sint54| 	int64 |	integer/string|
-|uint32 |	使用变长编码 |	uint32 	|integer|
-|uint64 |	使用变长编码 |	uint64 	|integer/string|
-|sint32 |	使用变长编码，有符号的整型值。编码时比通常的int32高效。| 	int32 |	integer|
-|sint64 |	使用变长编码，有符号的整型值。编码时比通常的int64高效。| 	int64| 	integer/string|
-|fixed32| 	总是8个字节，如果值总是比228大的话，这个类型比uint32高效| 	uint32 	|integer|
-|fixed64 	|总是8个字节，如果值总是比256大的话，这个类型比uint64高效| 	uint64 	| integer/string
-|sfixed32 |	总是4个字节 |	int32| 	integer|
-|sfixed64 |	总是8个字节 |	int64| 	integer/string|
-|bool 	|	|bool| 	boolean|
-|string 	|一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本。| 	string| 	string|
-|bytes| 	可能包含任意顺序的字节数据| 	[]byte 	|string|
+|.proto Type|Notes| go |php|  
+|:---:|:---:|:---:|:---:|  
+|double ||		float64| 	float|  
+|float 	 ||			float32 |	float|  
+|int32| 	如果有负号请使用sint32| 	int32 |	integer|  
+|int64| 	如果有负号请使用sint54| 	int64 |	integer/string|  
+|uint32 |	使用变长编码 |	uint32 	|integer|  
+|uint64 |	使用变长编码 |	uint64 	|integer/string|  
+|sint32 |	使用变长编码，有符号的整型值。编码时比通常的int32高效。| 	int32 |	integer|  
+|sint64 |	使用变长编码，有符号的整型值。编码时比通常的int64高效。| 	int64| 	integer/string|  
+|fixed32| 	总是8个字节，如果值总是比228大的话，这个类型比uint32高效| 	uint32 	|integer|  
+|fixed64 	|总是8个字节，如果值总是比256大的话，这个类型比uint64高效| 	uint64 	| integer/string|  
+|sfixed32 |	总是4个字节 |	int32| 	integer|  
+|sfixed64 |	总是8个字节 |	int64| 	integer/string|  
+|bool 	|	|bool| 	boolean|  
+|string 	|一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本。| 	string| 	string|  
+|bytes| 	可能包含任意顺序的字节数据| 	[]byte 	|string|  
 

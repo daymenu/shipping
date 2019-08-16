@@ -114,7 +114,7 @@ func CreateConn() (*gorm.DB, error) {
 }
 ```
 
-3. 新建container.go
+- 新建container.go
 
 ```go
 package model

@@ -47,10 +47,11 @@ func (cm *ContainerModel) Use(r *pb.Request) ([]*pb.Container, error) {
 func (cm *ContainerModel) Page(r *pb.Request) ([]*pb.Container, int64, error) {
 	var cs []*pb.Container
 	var count int64
+
 	if r.GetName() != "" {
 		cm.DB = cm.DB.Where("name like ?", r.GetName())
 	}
-
+	cm.DB.Model(&pb.Container{}).Count(&count)
 	cm.DB.Limit(r.GetPageSize()).Offset(((r.GetPage() - 1) * r.GetPageSize())).Find(&cs)
 	return cs, count, nil
 }

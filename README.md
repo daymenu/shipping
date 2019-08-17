@@ -5,6 +5,10 @@
 [grom参考文档](http://gorm.book.jasperxu.com/)  
 [微服务从设计到部署](https://docshome.gitbooks.io/microservices/)  
 [consul](https://kingfree.gitbook.io/consul/)  
+
+# 本项目文档　
+[文档地址](https://daymenu.github.io/shipping/)
+
 ## 说在前面
   - 这个教程是我入门微服务的教程，最开始是在studygolang.com中开始接触的看到这系列文章的。
   - 我学习的时间是2019年7月份。该系列文章已经有些过时了，但是这个微服务的整体思路和结构还是非常好的。

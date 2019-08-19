@@ -1,9 +1,12 @@
 package app
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"strconv"
+
+	"github.com/micro/go-micro/metadata"
 )
 
 // APIError  api错误封装
@@ -123,4 +126,25 @@ func (api *APIRequest) PostStrings(key string) ([]string, error) {
 		return nil, fmt.Errorf("api get [%s] is none", key)
 	}
 	return name.Values, nil
+}
+
+// HeaderString 获取header 头
+func (api *APIRequest) HeaderString(key string) (string, error) {
+	name, ok := api.request.Header[key]
+	if !ok || len(name.Values) == 0 {
+		return "", fmt.Errorf("header[%s] is not exist", key)
+	}
+	return name.Values[0], nil
+}
+
+//AddAuth 增加登录信息
+func (api *APIRequest) AddAuth(ctx context.Context) error {
+	token, err := api.HeaderString("X-Token")
+	if err != nil {
+		return err
+	}
+	ctx = metadata.NewContext(ctx, map[string]string{
+		"token": token,
+	})
+	return nil
 }

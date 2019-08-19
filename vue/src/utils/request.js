@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-import qs from 'qs'
+// import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
@@ -15,9 +15,10 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    config.headers['content-type'] = 'application/x-www-form-urlencoded'
+    // config.headers['content-type'] = 'application/x-www-form-urlencoded'
 
-    config.data =  qs.stringify(config.data)
+    // config.data =  qs.stringify(config.data)
+    console.log(store.getters.token)
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -47,7 +48,6 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res)
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       Message({

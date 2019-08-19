@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package daymenu.shipping.srv.user;
+
+service UserService{
+    rpc Create(User) returns (Response) {} // 新建用户
+    rpc Update(User) returns (Response) {} // 修改用户 
+    rpc Get(Request) returns (Response) {} // 获取一个用户
+    rpc Page(Request) returns (Response) {} // 用户分页获取 
+    rpc Login(User) returns (Token) {} //登录 
+    rpc ValidateToken(Token) returns (Token) {} // 验证token
+}
+
+// 用户
+message User {
+    int64 id = 1; // 自增ID
+    string name = 2; // 用户名
+    string company = 3; // 公司
+    string email = 4; // 邮件
+    string password = 5; // 密码
+    int64 status = 6; // 状态
+    string token = 7; // token
+    string mobile = 8; // 电话 
+}
+
+// 请求
+message Request {
+    int64 pageSize = 1;
+    int64 page = 2;
+    string email = 3;
+    string name = 4;
+    string mobile = 5;
+    string id = 6;
+}
+
+// 响应
+message Response {
+    User user = 1; // 一个用户 
+    repeated User users = 2; //多个用户  
+    repeated Error errors = 3; //多个错误  
+    Token token = 4;//token
+    int64 count = 5;// list 总数
+    int64 code =6;// code
+}
+
+// token
+message Token {
+    string token = 1;
+    bool valid = 2;
+    repeated Error errors = 3;
+}
+
+message Error {
+    int32 code = 1;
+    string descriptioin = 2;
+}

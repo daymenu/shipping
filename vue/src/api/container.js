@@ -1,8 +1,10 @@
 import request from '@/utils/request'
 
+const baseUrl = '/api/containerService'
+
 export function page(data) {
   return request({
-    url: '/container/containerService/page',
+    url: baseUrl + '/page',
     method: 'get',
     params: data
   })
@@ -10,7 +12,7 @@ export function page(data) {
 
 export function get(data) {
   return request({
-    url: '/container/containerService/get',
+    url: baseUrl + '/get',
     method: 'get',
     params: data
   })
@@ -18,28 +20,28 @@ export function get(data) {
 
 export function use(data) {
   return request({
-    url: '/container/containerService/use',
+    url: baseUrl + '/use',
     method: 'post',
     data
   })
 }
 export function giveback(data) {
   return request({
-    url: '/container/containerService/giveback',
+    url: baseUrl + '/giveback',
     method: 'post',
     data
   })
 }
 export function create(data) {
   return request({
-    url: '/container/containerService/create',
+    url: baseUrl + '/create',
     method: 'post',
     data
   })
 }
 export function update(data) {
   return request({
-    url: '/container/containerService/update',
+    url: baseUrl + '/update',
     method: 'post',
     data
   })

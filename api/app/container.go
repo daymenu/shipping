@@ -2,7 +2,8 @@ package app
 
 import (
 	"context"
-	"log"
+	"encoding/json"
+	"fmt"
 
 	pb "github.com/daymenu/shipping/container/proto/container"
 	microapi "github.com/micro/go-micro/api/proto"
@@ -79,60 +80,30 @@ func (container *Container) Create(ctx context.Context, req *microapi.Request, r
 		resp.Body = APIError(11000, "请以POST方式提交数据")
 		return nil
 	}
+	var c pb.Container
+	err := json.Unmarshal([]byte(req.GetBody()), &c)
+	if err != nil {
+		resp.StatusCode = 500
+		resp.Body = APIError(11000, "json parse"+err.Error())
+		return nil
+	}
+	vfs := []ValidateForm{
+		{Key: "notempty", Field: c.GetCustomerId(), Msg: "请填写正确的客户id"},
+		{Key: "notempty", Field: c.GetOrigin(), Msg: "请填写来源"},
+		{Key: "notempty", Field: c.GetUserId(), Msg: "请填写用户Id"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetWidth()), Msg: "请传入正确的集装箱宽度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetHeight()), Msg: "请传入正确的集装箱高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetLong()), Msg: "请传入正确的集装箱长度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetStatus()), Msg: "请选择状态"},
+	}
 
-	apiReq := APIRequest{request: req}
-	log.Println(req.Post)
-	width, err := apiReq.PostInt64("width")
-	if err != nil && width <= 0 {
+	if err := AutoCheck(vfs); err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
+		resp.Body = APIError(10000, err.Error())
 		return nil
 	}
-	height, err := apiReq.PostInt64("height")
-	if err != nil && height <= 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
-		return nil
-	}
-	customerID, err := apiReq.PostString("customer_id")
-	if err != nil && customerID == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写正确的客户id")
-		return nil
-	}
-	origin, err := apiReq.PostString("origin")
-	if err != nil && origin == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写来源")
-		return nil
-	}
-	userID, err := apiReq.PostString("user_id")
-	if err != nil && userID == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写正确的用户id")
-		return nil
-	}
-	long, err := apiReq.PostInt64("long")
-	if err != nil && long <= 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱长度")
-		return nil
-	}
-	status, err := apiReq.PostInt32("status")
-	if err != nil && status <= 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请选择集装箱状态")
-		return nil
-	}
-	response, err := container.Service.Create(ctx, &pb.Container{
-		Width:      width,
-		Height:     height,
-		CustomerId: customerID,
-		Origin:     origin,
-		UserId:     userID,
-		Long:       long,
-		Status:     status,
-	})
+
+	response, err := container.Service.Create(ctx, &c)
 	if err != nil {
 		resp.StatusCode = 500
 		resp.Body = APIError(10001, "api创建失败："+err.Error())
@@ -155,66 +126,30 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 		resp.Body = APIError(11000, "请以POST方式提交数据")
 		return nil
 	}
-	apiReq := APIRequest{request: req}
 
-	id, err := apiReq.PostInt64("id")
-	if err != nil && id < 0 {
+	var c pb.Container
+	err := json.Unmarshal([]byte(req.GetBody()), &c)
+	if err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写要修改的集装箱ID")
+		resp.Body = APIError(11000, "json parse"+err.Error())
 		return nil
 	}
-	long, err := apiReq.PostInt64("long")
-	if err != nil && long < 0 {
+	vfs := []ValidateForm{
+		{Key: "notempty", Field: c.GetCustomerId(), Msg: "请填写正确的客户id"},
+		{Key: "notempty", Field: c.GetOrigin(), Msg: "请填写来源"},
+		{Key: "notempty", Field: c.GetUserId(), Msg: "请填写用户Id"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetWidth()), Msg: "请传入正确的集装箱宽度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetHeight()), Msg: "请传入正确的集装箱高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetLong()), Msg: "请传入正确的集装箱长度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetStatus()), Msg: "请选择状态"},
+	}
+
+	if err := AutoCheck(vfs); err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱长度")
+		resp.Body = APIError(10000, err.Error())
 		return nil
 	}
-	width, err := apiReq.PostInt64("width")
-	if err != nil && width < 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
-		return nil
-	}
-	height, err := apiReq.PostInt64("height")
-	if err != nil && height < 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
-		return nil
-	}
-	customerID, err := apiReq.PostString("customer_id")
-	if err != nil && customerID == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写正确的客户id")
-		return nil
-	}
-	origin, err := apiReq.PostString("origin")
-	if err != nil && origin == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写来源")
-		return nil
-	}
-	userID, err := apiReq.PostString("user_id")
-	if err != nil && userID == "" {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写正确的用户id")
-		return nil
-	}
-	status, err := apiReq.PostInt32("status")
-	if err != nil && status < 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请选择集装箱状态")
-		return nil
-	}
-	response, err := container.Service.Update(ctx, &pb.Container{
-		Id:         id,
-		Width:      width,
-		Height:     height,
-		CustomerId: customerID,
-		Origin:     origin,
-		UserId:     userID,
-		Long:       long,
-		Status:     status,
-	})
+	response, err := container.Service.Update(ctx, &c)
 	if err != nil {
 		resp.StatusCode = 500
 		resp.Body = APIError(10001, "api修改失败："+err.Error())
@@ -231,31 +166,24 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 
 // Use  创建集装箱
 func (container *Container) Use(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
-	apiReq := APIRequest{request: req}
-
-	long, err := apiReq.PostInt64("long")
-	if err != nil && long < 0 {
+	var c pb.Request
+	err := json.Unmarshal([]byte(req.GetBody()), &c)
+	if err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱长度")
+		resp.Body = APIError(11000, "json parse"+err.Error())
 		return nil
 	}
-	width, err := apiReq.PostInt64("width")
-	if err != nil && width < 0 {
+	vfs := []ValidateForm{
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetWidth()), Msg: "请传入正确的集装箱宽度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetHeight()), Msg: "请传入正确的集装箱高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetLong()), Msg: "请传入正确的集装箱长度"},
+	}
+	if err := AutoCheck(vfs); err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱宽度")
+		resp.Body = APIError(10000, err.Error())
 		return nil
 	}
-	height, err := apiReq.PostInt64("height")
-	if err != nil && height < 0 {
-		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请传入正确的集装箱高度度")
-		return nil
-	}
-	response, err := container.Service.Use(ctx, &pb.Request{
-		Width:  width,
-		Height: height,
-		Long:   long,
-	})
+	response, err := container.Service.Use(ctx, &c)
 
 	resp.Body = APISuccess(struct {
 		Containers []*pb.Container `json:"containers"`
@@ -273,18 +201,22 @@ func (container *Container) GiveBack(ctx context.Context, req *microapi.Request,
 		resp.Body = APIError(11000, "请以POST方式提交数据")
 		return nil
 	}
-	apiReq := APIRequest{request: req}
-
-	id, err := apiReq.PostInt64("id")
-	if err != nil && id < 0 {
+	var c pb.Request
+	err := json.Unmarshal([]byte(req.GetBody()), &c)
+	if err != nil {
 		resp.StatusCode = 500
-		resp.Body = APIError(10000, "请填写要归还的集装箱ID")
+		resp.Body = APIError(11000, "json parse"+err.Error())
 		return nil
 	}
-
-	response, err := container.Service.GiveBack(ctx, &pb.Request{
-		Id: id,
-	})
+	vfs := []ValidateForm{
+		{Key: "num", Field: fmt.Sprintf("%d", c.GetId()), Msg: "请传入正确的集装箱ID"},
+	}
+	if err := AutoCheck(vfs); err != nil {
+		resp.StatusCode = 500
+		resp.Body = APIError(10000, err.Error())
+		return nil
+	}
+	response, err := container.Service.GiveBack(ctx, &c)
 
 	if err != nil {
 		resp.StatusCode = 500

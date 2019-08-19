@@ -61,9 +61,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
-     <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
-
+    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
     <el-dialog :title="buttonNames[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="editForm" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="客户编号" prop="customer_id">
@@ -135,7 +133,7 @@ export default {
         user_id: '',
         height: '',
         width: '',
-        long:  '',
+        long: '',
         status: ''
       },
 
@@ -183,7 +181,7 @@ export default {
     store() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          create(this.editForm).then((res) => {
+          create(this.formatForm(this.editForm)).then((res) => {
             this.list.unshift(res.data.container)
             this.hideDialog()
             this.$notify({
@@ -200,6 +198,7 @@ export default {
     },
     edit(row) {
       this.editForm = Object.assign({}, row)
+      this.editForm.status = '' + this.editForm.status
       this.dialogStatus = 'edit'
       this.showDialog()
       this.$nextTick(() => {
@@ -209,7 +208,7 @@ export default {
     update() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          update(this.editForm).then((res) => {
+          update(this.formatForm(this.editForm)).then((res) => {
             for (const v of this.list) {
               if (v.id === this.editForm.id) {
                 const index = this.list.indexOf(v)
@@ -232,6 +231,13 @@ export default {
     },
     search() {
 
+    },
+    formatForm(form) {
+      form.status = parseInt(form.status)
+      form.long = parseInt(form.long)
+      form.width = parseInt(form.width)
+      form.height = parseInt(form.height)
+      return form
     },
     resetEditForm() {
       this.editForm = {

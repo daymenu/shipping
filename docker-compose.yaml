@@ -44,7 +44,9 @@ services:
   build: ./container
   ports: ["50052:50051"]
   links: ["mariadb-service", "consul"]
-  depends_on: ["mariadb-service", "consul"]
+  depends_on: ["mariadb-service", "consul","user-service"]
+  environment:
+    CONSUL_HTTP_ADDR: registry
  user-service:
   build: ./user
   ports: ["50053:50051"]

@@ -97,6 +97,16 @@ func (u *User) Login(ctx context.Context, user *pb.User, token *pb.Token) error 
 	return nil
 }
 
+//UserInfo 用户信息
+func (u *User) UserInfo(ctx context.Context, token *pb.Token, resp *pb.Response) error {
+	custom, err := u.TokenService.Decode(token.Token)
+	if err != nil {
+		return err
+	}
+	resp.User = custom.User
+	return nil
+}
+
 // ValidateToken 验证token
 func (u *User) ValidateToken(ctx context.Context, token *pb.Token, resp *pb.Token) error {
 	claims, err := u.TokenService.Decode(token.Token)

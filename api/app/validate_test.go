@@ -1,8 +1,13 @@
 package app
 
-import "testing"
+import (
+	"net/url"
+	"testing"
+)
 
 func TestCheckEmail(t *testing.T) {
+	urlReq, _ := url.Parse("http://phpcap.com/hello/kit?name=hj")
+	t.Error("url path", urlReq.Path)
 	email := "hanjian2018@126.com"
 	if err := Check("email", email); err != nil {
 		t.Fail()

@@ -17,7 +17,7 @@ type User struct {
 // Page 列表
 func (user User) Page(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
-	apiReq.AddAuth(ctx)
+	ctx, _ = apiReq.AddAuth(ctx)
 	page, err := apiReq.GetInt64("page")
 	if err != nil {
 		page = 1
@@ -31,6 +31,11 @@ func (user User) Page(ctx context.Context, req *microapi.Request, resp *microapi
 		Page:     page,
 		PageSize: pageSize,
 	})
+	if err != nil {
+		resp.StatusCode = 500
+		resp.Body = APIError(12000, "permisssion:"+err.Error())
+		return nil
+	}
 	resp.Body = APISuccess(struct {
 		Count int64      `json:"count"`
 		Users []*pb.User `json:"users"`
@@ -48,6 +53,8 @@ func (user User) Get(ctx context.Context, req *microapi.Request, resp *microapi.
 
 // Create 列表
 func (user User) Create(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500
@@ -95,6 +102,8 @@ func (user User) Create(ctx context.Context, req *microapi.Request, resp *microa
 
 // Update 列表
 func (user User) Update(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500
@@ -139,6 +148,8 @@ func (user User) Update(ctx context.Context, req *microapi.Request, resp *microa
 
 // Login 列表
 func (user User) Login(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500
@@ -181,5 +192,24 @@ func (user User) Login(ctx context.Context, req *microapi.Request, resp *microap
 
 // UserInfo 列表
 func (user User) UserInfo(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
+	tokenStr, err := apiReq.HeaderString("X-Token")
+	if err != nil {
+		return err
+	}
+	fmt.Println(tokenStr)
+	response, err := user.Service.UserInfo(ctx, &pb.Token{Token: tokenStr})
+	if err != nil {
+		resp.StatusCode = 500
+		resp.Body = APIError(12000, err.Error())
+	}
+	resp.StatusCode = 200
+	fmt.Println("user:", response.GetUser())
+	resp.Body = APISuccess(struct {
+		User *pb.User `json:"user"`
+	}{
+		User: response.GetUser(),
+	})
 	return nil
 }

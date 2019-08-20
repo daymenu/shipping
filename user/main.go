@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 
 	"github.com/daymenu/shipping/user/handler"
@@ -24,8 +25,8 @@ func main() {
 	defer db.Close()
 	db.AutoMigrate(&pb.User{}).ModifyColumn("password", "varchar(1000)")
 
-	user := &model.UserModel{DB: db}
-	tokenService := &token.TokenService{User: user}
+	// user := &model.UserModel{DB: db}
+	tokenService := &token.TokenService{}
 	srv := micro.NewService(
 		micro.Name("daymenu.shipping.srv.user"),
 		micro.Version("latest"),
@@ -52,8 +53,22 @@ func AuthWapper(fn server.HandlerFunc) server.HandlerFunc {
 		}
 
 		// Note this is now uppercase (not entirely sure why this is...)
-		token := meta["Token"]
-		log.Println("Authenticating with token: ", token)
+		tokenStr := meta["Token"]
+		url := meta["Url"]
+
+		whiteList := map[string]bool{"/api/user/login": true}
+		fmt.Println(url, whiteList[url])
+		if white := whiteList[url]; !white {
+			fmt.Println("no white:", url)
+			if tokenStr == "" {
+				return fmt.Errorf("please input token")
+			}
+			tokenService := token.TokenService{}
+			custom, err := tokenService.Decode(tokenStr)
+			if custom.User.GetId() == 0 {
+				return fmt.Errorf("login error:%s", err.Error())
+			}
+		}
 		err := fn(ctx, req, resp)
 		return err
 	}

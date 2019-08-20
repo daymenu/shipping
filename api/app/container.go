@@ -16,9 +16,10 @@ type Container struct {
 
 // Get 实现方法
 func (container *Container) Get(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	//初始成功
 	resp.StatusCode = 200
-	apiReq := APIRequest{request: req}
 	id, err := apiReq.GetInt64("id")
 	if err != nil {
 		resp.StatusCode = 500
@@ -49,6 +50,7 @@ func (container *Container) Get(ctx context.Context, req *microapi.Request, resp
 // Page 容器分页
 func (container *Container) Page(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	page, err := apiReq.GetInt64("page")
 	if err != nil {
 		page = 1
@@ -62,6 +64,11 @@ func (container *Container) Page(ctx context.Context, req *microapi.Request, res
 		PageSize: pageSize,
 	})
 
+	if err != nil {
+		resp.StatusCode = 500
+		resp.Body = APIError(10001, err.Error())
+		return nil
+	}
 	resp.Body = APISuccess(struct {
 		Count      int64           `json:"count"`
 		Containers []*pb.Container `json:"containers"`
@@ -74,6 +81,8 @@ func (container *Container) Page(ctx context.Context, req *microapi.Request, res
 
 // Create  创建集装箱
 func (container *Container) Create(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500
@@ -102,7 +111,6 @@ func (container *Container) Create(ctx context.Context, req *microapi.Request, r
 		resp.Body = APIError(10000, err.Error())
 		return nil
 	}
-
 	response, err := container.Service.Create(ctx, &c)
 	if err != nil {
 		resp.StatusCode = 500
@@ -120,6 +128,8 @@ func (container *Container) Create(ctx context.Context, req *microapi.Request, r
 
 // Update  创建集装箱
 func (container *Container) Update(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500
@@ -166,6 +176,8 @@ func (container *Container) Update(ctx context.Context, req *microapi.Request, r
 
 // Use  创建集装箱
 func (container *Container) Use(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	var c pb.Request
 	err := json.Unmarshal([]byte(req.GetBody()), &c)
 	if err != nil {
@@ -195,6 +207,8 @@ func (container *Container) Use(ctx context.Context, req *microapi.Request, resp
 
 // GiveBack  创建集装箱
 func (container *Container) GiveBack(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+	apiReq := APIRequest{request: req}
+	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
 	if req.Method != "POST" {
 		resp.StatusCode = 500

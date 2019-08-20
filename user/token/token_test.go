@@ -43,8 +43,7 @@ func (repo *MockRepo) Update(user *pb.User) error {
 }
 
 func NewInstance() Authable {
-	repo := &MockRepo{}
-	return &TokenService{repo}
+	return &TokenService{}
 }
 
 func TestCanCreateToken(t *testing.T) {

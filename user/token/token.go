@@ -3,8 +3,6 @@ package token
 import (
 	"time"
 
-	"github.com/daymenu/shipping/user/model"
-
 	pb "github.com/daymenu/shipping/user/proto/user"
 	"github.com/dgrijalva/jwt-go"
 )
@@ -27,7 +25,6 @@ type Authable interface {
 
 // TokenService 定义token结构体
 type TokenService struct {
-	User *model.UserModel
 }
 
 // Decode 解码

@@ -8,6 +8,7 @@ service UserService{
     rpc Get(Request) returns (Response) {} // 获取一个用户
     rpc Page(Request) returns (Response) {} // 用户分页获取 
     rpc Login(User) returns (Token) {} //登录 
+    rpc UserInfo(Token) returns (Response) {} //登录 
     rpc ValidateToken(Token) returns (Token) {} // 验证token
 }
 

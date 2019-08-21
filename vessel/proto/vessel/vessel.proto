@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package daymenu.shipping.srv.vessel;
+
+service VesselService {
+    rpc Create(Vessel) returns (Reponse){} // 新建货轮
+    rpc Update(Vessel) returns (Reponse){} // 修改货轮
+    rpc Get(Request) returns (Reponse){} // 获取
+    rpc Page(Request)  returns (Reponse){}//列表
+    rpc FindAvaliable(Request) returns(Reponse){}//查找可用货轮
+}
+
+message Vessel {
+    int64 id = 1;//id
+    int64 capacity = 2;
+    int64 max_weight = 3;//最大承重
+    string name = 4;//名字
+    bool available = 5;//是否可用
+    string owner_id = 6;//所属人
+}
+
+message Request {
+    int64 page = 1;
+    int64 pageSize = 2;
+    string search = 3;
+    int64 id = 4;
+    int64 good_weight = 5;// 货物重量
+}
+
+message Reponse {
+    Vessel vessel = 1;
+    repeated Vessel vessels = 2;
+    int64 count = 3;
+    int64 code = 4;
+}

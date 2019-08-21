@@ -49,5 +49,3 @@
 [Golang 微服务教程四](https://segmentfault.com/a/1190000015209182)  
 [Golang 微服务教程五](https://segmentfault.com/a/1190000015209259)  
 [Golang 微服务教程六](https://segmentfault.com/a/1190000015209341)  
-
-该系列文章及代码在github上托管地址 https://github.com/wuYin/shippy/

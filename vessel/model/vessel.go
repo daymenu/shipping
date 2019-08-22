@@ -51,6 +51,9 @@ func (vm *VesselModel) Get(req *pb.Request) (*pb.Vessel, error) {
 
 // FindAvaiable 获取可用货轮
 func (vm *VesselModel) FindAvaiable(req *pb.Request) (*pb.Vessel, error) {
-
-	return nil, nil
+	var vessel pb.Vessel
+	if err := vm.DB.Where("max_weight>?", req.GetGoodWeight()).First(&vessel).Error; err != nil {
+		return nil, fmt.Errorf("%s", err)
+	}
+	return &vessel, nil
 }

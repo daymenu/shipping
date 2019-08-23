@@ -65,7 +65,16 @@ export const constantRoutes = [
       meta: { title: '集装箱管理', icon: 'dashboard' }
     }]
   },
-
+  {
+    path: '/vessel',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'Container',
+      component: () => import('@/views/vessel/index'),
+      meta: { title: '货轮管理', icon: 'dashboard' }
+    }]
+  },
   {
     path: '/auth',
     component: Layout,

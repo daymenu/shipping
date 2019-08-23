@@ -15,8 +15,11 @@ message Vessel {
     int64 capacity = 2;
     int64 max_weight = 3;//最大承重
     string name = 4;//名字
-    bool available = 5;//是否可用
-    string owner_id = 6;//所属人
+    int64 long= 5;//限长
+    int64 width= 6;//限宽
+    int64 height= 7;//限高
+    bool available = 8;//是否可用
+    string owner_id = 9;//所属人
 }
 
 message Request {

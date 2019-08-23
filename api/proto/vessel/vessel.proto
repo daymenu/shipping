@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package daymenu.shippping.api.api;
+
+import "github.com/micro/go-micro/api/proto/api.proto";
+
+service Vessel{
+	rpc Page(go.api.Request) returns(go.api.Response) {};
+	rpc Get(go.api.Request) returns(go.api.Response) {};
+	rpc Create(go.api.Request) returns(go.api.Response) {};
+	rpc Update(go.api.Request) returns(go.api.Response) {};
+	rpc FindAvaiable(go.api.Request) returns(go.api.Response) {};
+}

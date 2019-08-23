@@ -15,7 +15,7 @@ type User struct {
 }
 
 // Page 列表
-func (user User) Page(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) Page(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 	ctx, _ = apiReq.AddAuth(ctx)
 	page, err := apiReq.GetInt64("page")
@@ -47,12 +47,12 @@ func (user User) Page(ctx context.Context, req *microapi.Request, resp *microapi
 }
 
 // Get 列表
-func (user User) Get(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) Get(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	return nil
 }
 
 // Create 列表
-func (user User) Create(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) Create(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
@@ -101,7 +101,7 @@ func (user User) Create(ctx context.Context, req *microapi.Request, resp *microa
 }
 
 // Update 列表
-func (user User) Update(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) Update(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
@@ -147,7 +147,7 @@ func (user User) Update(ctx context.Context, req *microapi.Request, resp *microa
 }
 
 // Login 列表
-func (user User) Login(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) Login(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 	ctx, _ = apiReq.AddAuth(ctx)
 	resp.StatusCode = 200
@@ -191,7 +191,7 @@ func (user User) Login(ctx context.Context, req *microapi.Request, resp *microap
 }
 
 // UserInfo 列表
-func (user User) UserInfo(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
+func (user *User) UserInfo(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 	apiReq := APIRequest{request: req}
 	ctx, _ = apiReq.AddAuth(ctx)
 	tokenStr, err := apiReq.HeaderString("X-Token")

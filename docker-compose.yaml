@@ -52,6 +52,13 @@ services:
   ports: ["50053:50051"]
   links: ["mariadb-service", "consul"]
   depends_on: ["mariadb-service", "consul"]
+ vessel-service:
+  build: ./vessel
+  ports: ["50054:50051"]
+  links: ["mariadb-service", "consul"]
+  depends_on: ["mariadb-service", "consul","user-service"]
+  environment:
+    CONSUL_HTTP_ADDR: registry
  container-api:
   build: ./api
   ports: ["50051:50051"]

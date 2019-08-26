@@ -1,4 +1,4 @@
-# shipping 货物管理平台
+# shipping 港口货运管理平台
 
 # 参考资料
 [micro官网](https://micro.mu/docs/cn/index.html)  

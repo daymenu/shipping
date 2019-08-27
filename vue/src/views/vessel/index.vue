@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <div class="filter-container">
-      <el-input v-model="listQuery.costumer_id" placeholder="客户编号" style="width: 200px;" class="filter-item" />
+      <el-input v-model="listQuery.search" placeholder="货轮编号" style="width: 200px;" class="filter-item" />
       <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="create">添加</el-button>
     </div>
@@ -20,37 +20,32 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="客户编号" align="center">
+      <el-table-column label="名字" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.customer_id }}</span>
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="出发地" align="center">
+      <el-table-column label="最大承重" align="center">
         <template slot-scope="scope">
-          {{ scope.row.origin }}
+          {{ scope.row.max_weight }}
         </template>
       </el-table-column>
-      <el-table-column label="用户编号" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.user_id }}
-        </template>
-      </el-table-column>
-      <el-table-column label="长" align="center">
+      <el-table-column label="限长" align="center">
         <template slot-scope="scope">
           {{ scope.row.long }}
         </template>
       </el-table-column>
-      <el-table-column label="宽" align="center">
+      <el-table-column label="限宽" align="center">
         <template slot-scope="scope">
           {{ scope.row.width }}
         </template>
       </el-table-column>
-      <el-table-column label="高" align="center">
+      <el-table-column label="限高" align="center">
         <template slot-scope="scope">
           {{ scope.row.height }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" align="center">
+      <el-table-column class-name="status-col" label="状态" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ statusConf[scope.row.status] }}</el-tag>
         </template>
@@ -64,23 +59,20 @@
     <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
     <el-dialog :title="buttonNames[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="editForm" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="客户编号" prop="customer_id">
-          <el-input v-model="editForm.customer_id" type="text" placeholder="请输入客户编号" />
+        <el-form-item label="名字" prop="name">
+          <el-input v-model="editForm.name" type="text" placeholder="请输入名字" />
         </el-form-item>
-        <el-form-item label="出发地" prop="origin">
-          <el-input v-model="editForm.origin" type="text" placeholder="请输入出发地" />
+        <el-form-item label="最大承重" prop="max_weight">
+          <el-input v-model="editForm.max_weight" type="text" placeholder="请输入最大承重" />
         </el-form-item>
-        <el-form-item label="用户编号" prop="user_id">
-          <el-input v-model="editForm.user_id" type="text" placeholder="请输入用户编号" />
+        <el-form-item label="限长" prop="long">
+          <el-input v-model="editForm.long" type="text" placeholder="请输入最大长度" />
         </el-form-item>
-        <el-form-item label="长" prop="long">
-          <el-input v-model="editForm.long" type="text" placeholder="请输入集装箱长度" />
+        <el-form-item label="限宽" prop="width">
+          <el-input v-model="editForm.width" type="text" placeholder="请输入最大宽度" />
         </el-form-item>
-        <el-form-item label="宽" prop="width">
-          <el-input v-model="editForm.width" type="text" placeholder="请输入集装箱宽度" />
-        </el-form-item>
-        <el-form-item label="高" prop="height">
-          <el-input v-model="editForm.height" type="text" placeholder="请输入集装箱高度" />
+        <el-form-item label="限高" prop="height">
+          <el-input v-model="editForm.height" type="text" placeholder="请输入最大高度" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="editForm.status" placeholder="请选择">
@@ -103,7 +95,7 @@
 </template>
 
 <script>
-import { page, create, update } from '@/api/container'
+import { page, create, update } from '@/api/vessel'
 import { statusConf, buttonNames } from '@/config/common'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -128,9 +120,8 @@ export default {
       dialogStatus: '',
       buttonNames: buttonNames,
       editForm: {
-        customer_id: '',
-        origin: '',
-        user_id: '',
+        name: '',
+        max_weight: '',
         height: '',
         width: '',
         long: '',
@@ -138,19 +129,18 @@ export default {
       },
 
       rules: {
-        customer_id: [{ required: true, message: '请填写客户编号', trigger: 'blur' }],
-        origin: [{ required: true, message: '请填写出发地', trigger: 'blur' }],
-        user_id: [{ required: true, message: '请填写用户编号', trigger: 'blur' }],
-        long: [{ required: true, message: '请填写长度', trigger: 'blur' }],
-        width: [{ required: true, message: '请填写宽度', trigger: 'blur' }],
-        height: [{ required: true, message: '请填写高度', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
+        max_weight: [{ required: true, message: '请输入最大承重', trigger: 'blur' }],
+        long: [{ required: true, message: '请输入最大长度', trigger: 'blur' }],
+        width: [{ required: true, message: '请输入最大宽度', trigger: 'blur' }],
+        height: [{ required: true, message: '请输入最大高度', trigger: 'blur' }],
         status: [{ required: true, message: '请选择状态', trigger: 'blur' }]
       },
 
       // 列表
       list: null,
       listQuery: {
-        costumer_id: '',
+        search: '',
         page: 1,
         pageSize: 10,
         total: 0
@@ -165,7 +155,7 @@ export default {
     getList() {
       this.listLoading = true
       page(this.listQuery).then(response => {
-        this.list = response.data.containers
+        this.list = response.data.vessels
         this.listQuery.total = response.data.count
         this.listLoading = false
       })
@@ -182,7 +172,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           create(this.formatForm(this.editForm)).then((res) => {
-            this.list.unshift(res.data.container)
+            this.list.unshift(res.data.vessel)
             this.hideDialog()
             this.$notify({
               title: '成功',
@@ -234,6 +224,7 @@ export default {
     },
     formatForm(form) {
       form.status = parseInt(form.status)
+      form.max_weight= parseInt(form.max_weight)
       form.long = parseInt(form.long)
       form.width = parseInt(form.width)
       form.height = parseInt(form.height)
@@ -241,9 +232,8 @@ export default {
     },
     resetEditForm() {
       this.editForm = {
-        customer_id: '',
-        origin: '',
-        user_id: '',
+        name: '',
+        max_weight: '',
         height: '',
         width: '',
         long: '',

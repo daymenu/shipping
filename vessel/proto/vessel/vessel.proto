@@ -18,7 +18,7 @@ message Vessel {
     int64 long= 5;//限长
     int64 width= 6;//限宽
     int64 height= 7;//限高
-    bool available = 8;//是否可用
+    int64 status= 8;//是否可用
     string owner_id = 9;//所属人
 }
 

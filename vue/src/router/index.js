@@ -62,7 +62,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Container',
       component: () => import('@/views/container/index'),
-      meta: { title: '集装箱管理', icon: 'dashboard' }
+      meta: { title: '集装箱管理', icon: 'example' }
     }]
   },
   {
@@ -72,7 +72,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Container',
       component: () => import('@/views/vessel/index'),
-      meta: { title: '货轮管理', icon: 'dashboard' }
+      meta: { title: '货轮管理', icon: 'component' }
     }]
   },
   {
@@ -80,13 +80,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/auth/user',
     name: 'Auth',
-    meta: { title: '权限管理', icon: 'example' },
+    meta: { title: '权限管理', icon: 'peoples' },
     children: [
       {
         path: 'user',
         name: 'AuthUser',
         component: () => import('@/views/user/index'),
-        meta: { title: '人员管理', icon: 'table' }
+        meta: { title: '人员管理', icon: 'peoples' }
       }
     ]
   },

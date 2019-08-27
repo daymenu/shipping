@@ -50,7 +50,7 @@
           {{ scope.row.height }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" align="center">
+      <el-table-column class-name="status-col" label="状态" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ statusConf[scope.row.status] }}</el-tag>
         </template>

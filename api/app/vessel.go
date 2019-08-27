@@ -71,13 +71,12 @@ func (vessel *Vessel) Create(ctx context.Context, req *microapi.Request, resp *m
 	}
 
 	vfs := []ValidateForm{
-		{Key: "capacity", Field: fmt.Sprintf("%d", v.GetCapacity()), Msg: "请填写正确的容量"},
-		{Key: "max_weight", Field: fmt.Sprintf("%d", v.GetMaxWeight()), Msg: "请填写正确的容量"},
-		{Key: "name", Field: v.GetName(), Msg: "请填写货轮名称"},
-		{Key: "long", Field: fmt.Sprintf("%d", v.GetLong()), Msg: "请填写正确的高度"},
-		{Key: "width", Field: fmt.Sprintf("%d", v.GetWidth()), Msg: "请填写正确的宽度"},
-		{Key: "height", Field: fmt.Sprintf("%d", v.GetHeight()), Msg: "请填写正确的高度"},
-		{Key: "owner_id", Field: v.GetOwnerId(), Msg: "请填写货轮所属人"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetMaxWeight()), Msg: "请填写正确的容量"},
+		{Key: "notempty", Field: v.GetName(), Msg: "请填写货轮名称"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetLong()), Msg: "请填写正确的高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetWidth()), Msg: "请填写正确的宽度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetHeight()), Msg: "请填写正确的高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetStatus()), Msg: "请选择正确的状态"},
 	}
 
 	if err := AutoCheck(vfs); err != nil {
@@ -115,13 +114,12 @@ func (vessel *Vessel) Update(ctx context.Context, req *microapi.Request, resp *m
 	var v pb.Vessel
 	err := json.Unmarshal([]byte(req.GetBody()), &v)
 	vfs := []ValidateForm{
-		{Key: "capacity", Field: fmt.Sprintf("%d", v.GetCapacity()), Msg: "请填写正确的容量"},
-		{Key: "max_weight", Field: fmt.Sprintf("%d", v.GetMaxWeight()), Msg: "请填写正确的容量"},
-		{Key: "name", Field: v.GetName(), Msg: "请填写货轮名称"},
-		{Key: "long", Field: fmt.Sprintf("%d", v.GetLong()), Msg: "请填写正确的高度"},
-		{Key: "width", Field: fmt.Sprintf("%d", v.GetWidth()), Msg: "请填写正确的宽度"},
-		{Key: "height", Field: fmt.Sprintf("%d", v.GetHeight()), Msg: "请填写正确的高度"},
-		{Key: "owner_id", Field: v.GetOwnerId(), Msg: "请填写货轮所属人"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetMaxWeight()), Msg: "请填写正确的容量"},
+		{Key: "notempty", Field: v.GetName(), Msg: "请填写货轮名称"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetLong()), Msg: "请填写正确的高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetWidth()), Msg: "请填写正确的宽度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetHeight()), Msg: "请填写正确的高度"},
+		{Key: "num", Field: fmt.Sprintf("%d", v.GetStatus()), Msg: "请选择正确的状态"},
 	}
 
 	if err := AutoCheck(vfs); err != nil {
@@ -145,7 +143,7 @@ func (vessel *Vessel) Update(ctx context.Context, req *microapi.Request, resp *m
 }
 
 // FindAvaiable 查找可用货轮
-func (vessel *Vessel) FindAvaiable(ctx context.Context, req microapi.Request, resp microapi.Response) error {
+func (vessel *Vessel) FindAvaiable(ctx context.Context, req *microapi.Request, resp *microapi.Response) error {
 
 	return nil
 }

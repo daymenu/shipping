@@ -27,17 +27,17 @@ func (vm *VesselModel) Page(req *pb.Request) ([]*pb.Vessel, int64, error) {
 //Create 创建货轮
 func (vm *VesselModel) Create(vessel *pb.Vessel) (*pb.Vessel, error) {
 	if err := vm.DB.Create(vessel).Error; err != nil {
-		return vessel, err
+		return nil, err
 	}
-	return nil, nil
+	return vessel, nil
 }
 
 //Update 修改货轮
 func (vm *VesselModel) Update(vessel *pb.Vessel) (*pb.Vessel, error) {
 	if err := vm.DB.Save(vessel).Error; err != nil {
-		return vessel, err
+		return nil, err
 	}
-	return nil, nil
+	return vessel, nil
 }
 
 //Get 获取货轮

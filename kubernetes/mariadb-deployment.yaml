@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+    name: mariadb
+    namespace: shipping
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            name: mariadb
+    template:
+        metadata:
+            labels:
+                name: mariadb
+        spec:
+            volumes:
+                -   name:   mariadbdata
+                    emptyDir: {}
+            containers:
+                -   name: mariadb
+                    image: mariadb
+                    ports:
+                        -   containerPort:  3306
+                    env:
+                        -   name: MYSQL_ROOT_PASSWORD
+                            value:  "123456"
+                    volumeMounts:
+                        -   mountPath: /data/mariadb
+                            name: mariadbdata
+        

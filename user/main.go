@@ -15,6 +15,7 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/server"
+	_ "github.com/micro/go-plugins/registry/kubernetes"
 )
 
 func main() {

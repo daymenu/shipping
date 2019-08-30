@@ -14,6 +14,8 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/consul"
+
+	_ "github.com/micro/go-plugins/registry/kubernetes"
 )
 
 func main() {

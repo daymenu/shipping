@@ -17,6 +17,8 @@ import (
 
 	pbUser "github.com/daymenu/shipping/user/proto/user"
 	pb "github.com/daymenu/shipping/vessel/proto/vessel"
+
+	_ "github.com/micro/go-plugins/registry/kubernetes"
 )
 
 func main() {

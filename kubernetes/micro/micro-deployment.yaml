@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind:   Deployment
+metadata:
+    name:   micro
+    namespace: shipping
+spec:
+    replicas:   1
+    selector:
+        matchLabels:
+            app:    micro
+    template:
+        metadata:
+            labels:
+                app:    micro
+        spec:
+            containers:
+                -   name:   micro
+                    image:  microhq/micro:kubernetes
+                    args:
+                        -   "api"
+                        -   "--namespace=daymenu.shipping.web"
+                        -   "--handler=api"
+                -   name:   microweb
+                    image:  microhq/micro:kubernetes
+                    ports:
+                        -   containerPort:  8082
+                    args:
+                        -   "web"
+                        -   "--namespace=daymenu.shipping.web"
+                    env:
+                        -   name:   MICRO_WEB_ADDRESS
+                            value:  0.0.0.0:8082
+                        -   name:   MICRO_WEB_NAMESPACE
+                            value:  daymenu.shipping.web

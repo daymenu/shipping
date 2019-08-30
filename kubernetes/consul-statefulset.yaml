@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: consul
+    namespace: shipping
+spec:
+    replicas: 3
+    serviceName: "consul"
+    selector:
+        matchLabels:
+            app: consul
+    template:
+        metadata:
+            labels:
+                app: consul
+        spec:
+            terminationGracePeriodSeconds: 10
+            volumes:
+                -   name:   consuldata
+                    emptyDir:   {}
+            containers:
+                -   name: consul
+                    image: consul:1.6.0
+                    args:
+                        -   "agent"
+                        -   "-server"
+                        -   "-bootstrap-expect=3"
+                        -   "-data-dir=/consul/data"
+                        -   "-retry-join=consul-0.consul.shipping.svc.cluster.local"
+                        -   "-retry-join=consul-1.consul.shipping.svc.cluster.local"
+                        -   "-retry-join=consul-2.consul.shipping.svc.cluster.local"
+                    ports:
+                        -   containerPort:  8500
+                            name:   ui-port
+                        -   containerPort:  53
+                            name:   udp-port
+                        -   containerPort:  8300
+                            name:   server
+                        -   containerPort:  8600
+                            name:   consuldns
+                        -   containerPort:  8301
+                            name:   serflan
+                        -   containerPort:  8302
+                            name:   serfwan
+                    env:
+                        -   name: GOMAXPROCS
+                            value:  "2"
+                    volumeMounts:
+                        -   mountPath: /data/consul
+                            name: consuldata

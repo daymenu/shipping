@@ -14,3 +14,4 @@ delete:
 show:
 	sudo kubectl get deployment --namespace=shipping
 	sudo kubectl get service --namespace=shipping
+	sudo kubectl get pods --namespace=shipping
